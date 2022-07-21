@@ -426,7 +426,9 @@ def GroundMotionSim(M, Dist, Rval, Vs30, F, n):
             elif j >= id[i]:
                 mediaLOG[i][j] = LOGN[i][j]
 
-            XS_t_f[i, j] = Pa_t[i] * mediaLOG[i][j]
+            #XS_t_f[i, j] = Pa_t[i] * mediaLOG[i][j]
+            
+    XS_t_f = (Pa_t*mediaLOG.T).T
 
     ############################
     ### Generate Time Series ###
