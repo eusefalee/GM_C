@@ -2,7 +2,7 @@ from re import T
 import numpy as np
 from scipy.stats import gamma
 import sys
-import csv
+# import csv
 np.set_printoptions(threshold=sys.maxsize)
 
 
@@ -427,7 +427,7 @@ def GroundMotionSim(M, Dist, Rval, Vs30, F, n):
                 mediaLOG[i][j] = LOGN[i][j]
 
             #XS_t_f[i, j] = Pa_t[i] * mediaLOG[i][j]
-            
+
     XS_t_f = (Pa_t*mediaLOG.T).T
 
     ############################
@@ -480,6 +480,6 @@ def GroundMotionSim(M, Dist, Rval, Vs30, F, n):
 
     return t,ACC
 
-import sys
+
 if __name__ == '__main__':
     globals()[sys.argv[1]](*sys.argv[2:])
