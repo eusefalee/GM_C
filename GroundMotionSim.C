@@ -23,9 +23,11 @@ GroundMotionSim::validParams()
   params.addRequiredParam<Real>("M", "Magnitude of Event");
   params.addRequiredParam<Real>("R", "Joyner-Boore or Epicentral Distance");
   params.addRequiredParam<Real>("Vs30", "Shear Wave Velocity at 30m");
-  params.addParam<std::string>("F","'SS'","Style of Faulting");
-  params.addParam<std::string>("R_type", "'Rjb'", "Indicates whether R distance is Joyner-Boore or Epicentral distance");
-  params.addParam<int>("n",1,"Number of Simulations to run for each set of inputs");
+  MooseEnum F("SS TF NF", "SS");
+  MooseEnum R_type("Rjb Repi", "Rjb");
+  params.addParam<MooseEnum>("F",F,"Style of Faulting");
+  params.addParam<MooseEnum>("R_type",R_type,"Indicates whether R distance is Joyner-Boore or Epicentral distance");
+  params.addParam<unsigned int>("n",1,"Number of Simulations to run for each set of inputs");
   params.set<std::vector<Real>>("xy_data") = {};
   params.addClassDescription(
       "Calculates a ground acceleration history using a ground motion model written in a python script");
@@ -41,9 +43,9 @@ GroundMotionSim::GroundMotionSim(const InputParameters & parameters) : Piecewise
   const auto M = this->template getParam<Real>("M");
   const auto R = this->template getParam<Real>("R");
   const auto V = this->template getParam<Real>("Vs30");
-  const auto F = this->template getParam<std::string>("F");
-  const auto n = this->template getParam<int>("n");
-  const auto R_type = this->template getParam<std::string>("R_type");
+  const auto n = this->template getParam<unsigned int>("n");
+  std::string R_type = this->template getParam<MooseEnum>("R_type");
+  std::string F = this->template getParam<MooseEnum>("F");
 
 //   // Return error and exit if F out of bounds
 //   (F < 0 || F >= 3) ? std::cout << "Invalid F value" std::endl return 0;
